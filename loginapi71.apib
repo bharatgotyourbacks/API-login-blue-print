@@ -1,0 +1,122 @@
+FORMAT: 1A
+HOST: HOST: http://127.0.0.1:8000
+
+# loginapi
+
+login is a simple API allowing users to login into the application(yours) 
+
+## users Collection [/api/admin/login]
+
+
+### User sending singup credentials(email,password) [POST]
+
+User sending (email,password) using this action. It takes a JSON
+object containing a credentials and a collection of userdetails which he entered in the
+form of choices.
+
++ Request (application/json) from client side
+
+                       [
+                       {
+                        
+       
+                        "email": "*****@gmail.com"
+        
+                        "password": "******",
+                       
+                       }
+                       ]
+         If
+          Request JSON details matched with the database then A JWT token generates inform of ....
+          
+          
+          {
+    "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC8xMjcuMC4wLjE6ODAwMFwvYXBpXC9hZG1pblwvbG9naW4iLCJpYXQiOjE2NDc5NDk1NDYsImV4cCI6MTY0Nzk1MzE0NiwibmJmIjoxNjQ3OTQ5NTQ2LCJqdGkiOiJQTnhDQ0VuaHgydzRjN3NLIiwic3ViIjo3NDY3MTQyNzgyNjU0NTQ1OTMsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.2dCS01uFwoBiL8DZZY2WFOaTgf8cGmYb6d5BOIcbgYk",
+    "token_type": "bearer",
+    "expires_in": 3600,
+    "user": "******"
+}
+          HEADER:ALGORITHM & TOKEN TYPE
+
+{
+
+  "alg": "HS256",
+
+  "typ": "JWT"
+
+}
+
+PAYLOAD:DATA
+
+{
+
+  "sub": "1234567890",
+
+  "name": "******",
+
+  "iat": 1516239022
+
+}
+
+VERIFY SIGNATURE
+
+HMACSHA256(
+  base64UrlEncode(header) + "." +
+  base64UrlEncode(payload),
+  
+) secret base64 encoded
++ Response 201 (application/json) from server side
+
+    + Headers
+
+            Location: http://127.0.0.1:8000/api/(prefix)users
+            private baseUrl( http://127.0.0.1:8000/api/admin/login)
+            return this.http.post(`${this.baseUrl}/signup`, data)
+
+    + Body
+
+                       [
+                       {
+                        
+       
+                        "email": "*****@gmail.com"
+        
+                        "password": "******",
+                       
+                       }
+                       ]
+                       
+                       
+         It check with              
+                       
++ Requested (application/json)  details 
+
+         matched then user able to logged into the apllication  
+        
+        
+        
+        
+        return response()->json([
+            'message' => 'User successfully registered',
+            'user' => $user
+        ], 201);
+        
+        
+        
+        else
+           
+ + Requested (application/json)  details 
+       
+         unmatched then user do not able to logged into the apllication 
+        
+        
+        return response()->json([
+        'error' => 'Unauthorized'
+        ], 401);
+        
+        
+        
+        
+        
+        
+                       
